@@ -28,17 +28,19 @@ import { Ionicons, Fontisto } from '@expo/vector-icons'
 
 const QRCode = ({ navigation }): React.ReactElement => {
   return (
-    <View style={{ backgroundColor: white, flex: 1 }}>
+    <View style={{ backgroundColor: grey, flex: 1 }}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Image
-          source={require('../Assets/QRcode.png')}
-          style={{ height: 350, width: 350 }}
+          source={require('../Assets/QRCode.png')}
+          style={{ height: 300, width: 300 }}
         />
         <Text
           style={{
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: 'bold',
             padding: 15,
+            marginTop: 10,
+            color: primary
           }}
         >
           Scan with Companion Therapist App

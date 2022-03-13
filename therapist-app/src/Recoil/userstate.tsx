@@ -12,28 +12,12 @@ const useratom = atom<User>({
         questions: null as string[],
         completed: false,
         allergies: []
-
-        // age: "18",
-        // gender: "Male",
-        // height: "5'7",
-        // questions: [
-        //   "1",
-        //   "0",
-        //   "1",
-        //   "1",
-        //   "0",
-        //   "0",
-        //   "0",
-        //   "0",
-        //   "0",
-        //   "0",
-        //   "0",
-        //   "0",
-        // ],
-        // weight: "120",
-        // completed: true,
-        // allergies: []
         
+        // age: "12",
+        // gender: "1",
+        // height: "14",
+        // weight: "12",
+        // t_rec: "meat"
     }
   })
 

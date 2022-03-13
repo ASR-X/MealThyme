@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Therapist Dev",
+    "slug": "therapist-dev",
+    "scheme": "therapistdev",
+    "android": {
+      "package": "com.therapistdev"
+    },
+    "userInterfaceStyle": "automatic"
+  }
+}

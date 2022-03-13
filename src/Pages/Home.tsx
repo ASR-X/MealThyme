@@ -6,22 +6,6 @@ import React, {
   useState,
 } from 'react'
 
-import { MainRoutes } from '../Navigators/routes'
-
-const data = [
-  {
-    value: '0',
-    label: '1 M',
-  },
-  {
-    value: '1',
-    label: '3 M',
-  },
-  {
-    value: '2',
-    label: '1 Y',
-  },
-]
 //Components
 import {
   SafeAreaView,
@@ -69,10 +53,13 @@ import { Ionicons, Fontisto } from '@expo/vector-icons'
 import weekplanstate from '../Recoil/weekplanstate'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Icon } from 'react-native-elements'
+import { parse } from 'expo-linking'
+import { background } from 'native-base/lib/typescript/theme/styled-system'
 
 const Home = ({ route, navigation }): React.ReactElement => {
 
   const [weekplan, setweekplan] = useRecoilState(weekplanstate)
+  const [selected, setSelected] = useState('1')
   const [Meals, setMeals] = useState([
     {
       id: '1',
@@ -97,37 +84,25 @@ const Home = ({ route, navigation }): React.ReactElement => {
     },
   ])
 
-  useEffect( () => setMeals(
-    [
-      {
-        id: '1',
-        title: 'Breakfast',
-        expanded: true,
-        checked: false,
-        loaded: false,
-      },
-      {
-        id: '2',
-        title: 'Lunch',
-        expanded: false,
-        checked: false,
-        loaded: false,
-      },
-      {
-        id: '3',
-        title: 'Dinner',
-        expanded: false,
-        checked: false,
-        loaded: false,
-      },
-    ]
-  ), [weekplan])
+  useEffect(() => {
+    for (let i =0; i < Meals.length; i++) {
+      var item = {...Meals[i]}
+      setweekplan(prevState => {
+        var prevCompletedMeals = [...prevState.completedMeals]
+        prevCompletedMeals[getID(item.id)/3] = item.checked ? 1 : 0
+        return {
+          ...prevState,
+          completedMeals: prevCompletedMeals
+        }})
+    }
+  }, [Meals])
+
+  console.log(weekplan.completedMeals)
 
   const today = new Date().getDate()
 
   const getID = (id: string) => {
     var convid = parseInt(id)
-    console.log(( (weekplan.selectedDay - today) * 3 + convid-1 ) *3)
     return ( (weekplan.selectedDay - today) * 3 + convid-1 ) *3
 }
 
@@ -154,7 +129,7 @@ const Home = ({ route, navigation }): React.ReactElement => {
       marginVertical: 7,
       paddingVertical: 7,
       borderWidth: 1,
-      borderColor: item.id=='1' ? primary : white,
+      borderColor: item.id==selected ? primary : white,
     }}>
      <View style={{
         flexDirection: "row",
@@ -181,8 +156,8 @@ const Home = ({ route, navigation }): React.ReactElement => {
       <Text
         style={{
           fontSize: 35,
-          fontWeight: item.id=='1' ? '300' : '100',
-          color: item.id=='1' ? primary : white,
+          fontWeight: item.id==selected ? '300' : '100',
+          color: item.id==selected ? primary : white,
         }}
       >
         {item.title}
@@ -220,7 +195,7 @@ const Home = ({ route, navigation }): React.ReactElement => {
                   }}
 
                   style={[{width: 1, height: 1,},
-                    item.loaded && {width: 150, height: 150,}]}
+                    item.loaded && {width: 130, height: 150,}]}
                   />
                 </View>
                   
@@ -238,63 +213,60 @@ const Home = ({ route, navigation }): React.ReactElement => {
             <View style={{
               flex: 1,
               flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
             }}>
               <Text
                 style={{
                   fontSize: 15,
                   fontWeight: '200',
                   color: white,
-                  flex:1
+                  width: 180,
                 }}
               >
                 <Text
                 style={{
-                  fontSize: 20,
                   fontWeight: '200',
                   color: primary,
+                  fontSize: 20,
                 }}
               >Entreé: </Text>
-                {item.title}
+                {weekplan.meals[getID(item.id)/3].entree}
               </Text>
               <Text
                 style={{
                   fontSize: 15,
                   fontWeight: '200',
                   color: white,
-                  flex:1
+                  width: 180,
                 }}
               > <Text
               style={{
-                fontSize: 20,
                 fontWeight: '200',
                 color: primary,
+                fontSize: 20,
               }}
-            >Side: </Text> {item.title}
+            >Side: </Text> {weekplan.meals[getID(item.id)/3].side}
               </Text>
               <Text
                 style={{
                   fontSize: 15,
                   fontWeight: '200',
                   color: white,
-                  flex:1
+                  width: 180
                 }}
               > <Text
               style={{
-                fontSize: 20,
                 fontWeight: '200',
                 color: primary,
+                fontSize: 20,
               }}
             >Fruits: </Text>
-                {item.title}
+                {weekplan.meals[getID(item.id)/3].fruits}
               </Text>
               </View>
               <View style={{flex:1}}>
               <TouchableOpacity style={{zIndex: 2}} onPress={() => {
-                if (item.id != '1' && item.id != '0') {
-                  return
-                }
                 const currentChecked = item.checked ? true : false
                 setMeals(prevState => {
                   return prevState.map(meal => {
@@ -305,19 +277,13 @@ const Home = ({ route, navigation }): React.ReactElement => {
                       }
                     }
                     return meal
-                  })
-                })
-                setMeals(prevState => {
-                  return prevState.map(meal => {
-                    if (!currentChecked) {
-                      meal.id = (parseInt(meal.id) - 1) + ''
-                    }
-                    else{
-                      meal.id = (parseInt(meal.id) + 1) + ''
-                    }
-                    return meal
-                  })
-                })
+                  })})
+                if (!currentChecked && parseInt(item.id) <= parseInt(selected)) {
+                  setSelected(parseInt(selected) + 1 + '')
+                }
+                else {
+                  setSelected(parseInt(selected) - 1 + '')
+                }
               }}>
                     <Icon name="check-circle" type="material" color={item.checked ? primary : white} containerStyle={{height: 50, width: 50, alignContent: 'center', justifyContent: 'center'}} />
                   </TouchableOpacity>
@@ -332,18 +298,23 @@ const Home = ({ route, navigation }): React.ReactElement => {
   )
   }
   return (
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           backgroundColor: grey,
           //marginTop: 30,
         }}
       >
+        <ScrollView
+          style={{
+            flex: 1,
+          }}>
          
         <StatusBar barStyle="dark-content" />
         <View>
           <GreenOval />
         </View>
+
 
         <View style={{
           flexDirection: 'column',
@@ -377,8 +348,8 @@ const Home = ({ route, navigation }): React.ReactElement => {
             contentContainerStyle={{ justifyContent: 'flex-start', paddingBottom:20}} 
           />
         </View>
-
-      </SafeAreaView>
+        </ScrollView>
+      </View>
   )
 }
 

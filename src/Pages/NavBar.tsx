@@ -69,6 +69,8 @@ const NavBar = (): React.ReactElement => {
             iconName = focused ? 'calendar' : 'calendar-outline'
           } else if (route.name === 'Trends') {
             iconName = focused ? 'analytics' : 'analytics-outline'
+          } else if (route.name === 'QR') {
+            iconName =  focused ? 'qr-code' : 'qr-code-outline'
           }
 
           // You can return any component that you like here!
@@ -88,6 +90,7 @@ const NavBar = (): React.ReactElement => {
       <Tab.Screen name={MainRoutes.Home} component={HomeStackScreen} />
       <Tab.Screen name={MainRoutes.DateList} component={PlanStackScreen} />
       <Tab.Screen name={MainRoutes.Analytics} component={GraphsStackScreen} />
+      <Tab.Screen name={MainRoutes.QRCode} component={QRCode} />
       {/* <Tab.Screen name={MainRoutes.Connect} component={Connect} /> */}
     </Tab.Navigator>
   )
@@ -100,22 +103,13 @@ const HomeStackScreen = ({ navigation }) => {
     <HomeStack.Navigator
     screenOptions={{
       headerShown: false,
+      
     }}
     >
       <HomeStack.Screen
       
         name={MainRoutes.Home}
         component={Home}
-      />
-
-      <HomeStack.Screen
-        component={QRCode}
-        name={MainRoutes.QRCode}
-        options={{
-          title: 'QR Code',
-          headerBackTitleVisible: false,
-          headerLeftContainerStyle: { marginLeft: 10 },
-        }}
       />
     </HomeStack.Navigator>
   )
@@ -367,39 +361,12 @@ const GraphsStackScreen = ({ navigation }) => {
   return (
     <GraphStack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: white,
-          shadowColor: white, // iOS
-          elevation: 0, // Android
-        },
-        headerTintColor: black,
+        headerShown: false,
       }}
     >
       <GraphStack.Screen
         name={MainRoutes.Analytics}
         component={Analytics}
-        options={{
-          title: 'Analytics',
-          headerLeftContainerStyle: { marginLeft: 10 },
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            color: primary,
-            fontSize: 60,
-            width: 400,
-            height: 80,
-            marginTop: 15,
-          },
-          headerRightContainerStyle: { marginRight: 10 },
-          headerRight: () => (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: 40,
-              }}
-            ></View>
-          ),
-        }}
       />
     </GraphStack.Navigator>
   )

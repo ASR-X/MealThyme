@@ -8,15 +8,15 @@ import { useRecoilState } from 'recoil'
 
 import { QuestionText, Colors } from './styles'
 
-const { primary, tertiary, white, black } = Colors
+const { primary,white, black } = Colors
 
 const Item = ({ item, selected, onPress }): React.ReactElement<any> => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.item]}>
       {selected ? (
-        <FontAwesome name="circle" color={white} size={13} />
+        <FontAwesome name="circle" color={primary} size={13} />
       ) : (
-        <FontAwesome name="circle-o" color={white} size={13} />
+        <FontAwesome name="circle-o" color={primary} size={13} />
       )}
       <QuestionText>{item.title}</QuestionText>
     </TouchableOpacity>

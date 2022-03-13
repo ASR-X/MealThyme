@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 
 import { FlatList, TouchableOpacity, StyleSheet } from 'react-native'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useRecoilState } from 'recoil'
-import { marginBottom } from 'styled-system'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
 import userstate from '../Recoil/userstate'
-
-
+import { useRecoilState } from 'recoil'
 
 import { QuestionText, Colors } from './styles'
 
@@ -16,35 +14,28 @@ const Item = ({ item, selected, onPress }): React.ReactElement<any> => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.item]}>
       {selected ? (
-        <MaterialIcons name="check-box" color={primary} size={18} />
+        <FontAwesome name="circle" color={primary} size={13} />
       ) : (
-        <MaterialIcons name="check-box-outline-blank" color={primary} size={18} />
+        <FontAwesome name="circle-o" color={primary} size={13} />
       )}
-      <QuestionText style={{ fontSize: 18 }}>{item.title}</QuestionText>
+      <QuestionText>{item.title}</QuestionText>
     </TouchableOpacity>
   )
 }
 
-export const BoxChoice = ({ props, num }): React.ReactElement<any> => {
-  const [selectedId, setSelectedId] = useState([])
+export const MultipleChoice = ({ props, num }): React.ReactElement<any> => {
+  const [selectedId, setSelectedId] = useState(null)
   const [user, setuser] = useRecoilState(userstate);
 
   const renderItem = ({ item }) => {
-    const selected = selectedId.includes(item.id)
+    const selected = item.id === selectedId ? true : false
     return (
       <Item
         item={item}
         selected={selected}
         onPress={() => {
-          if (selectedId.includes(item.id)) {
-            setuser({
-                [num]: selectedId.filter((id) => id !== item.id),
-            })
-            setSelectedId(selectedId.filter((id) => id !== item.id))
-          } else {
-            setuser({ [num]: selectedId.concat(item.id) })
-            setSelectedId(selectedId.concat(item.id))
-          }
+          setSelectedId(item.id)
+          setuser({ [num]: item.id })
         }}
       />
     )
@@ -65,7 +56,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 20,
     width: '100%',
-    marginVertical: 5,
+    marginVertical: 8,
     marginHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',

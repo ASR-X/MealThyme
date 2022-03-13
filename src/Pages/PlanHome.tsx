@@ -74,7 +74,7 @@ const PlanHome = ({ navigation }): React.ReactElement => {
       loaded: false,
     },
   ])
-  
+
   useEffect( () => setMeals(
     [
       {
@@ -234,10 +234,10 @@ const PlanHome = ({ navigation }): React.ReactElement => {
                       fontWeight: '200',
                       color: primary,
                       marginTop: 5,
-                      minWidth: 120,
+                      minWidth: 200,
                     }}
                   >Entreé: </Text>
-                    {item.title}
+                    {weekplan.meals[getID(item.id)/3].entree}
                   </Text>
                   <Text
                     style={{
@@ -245,7 +245,7 @@ const PlanHome = ({ navigation }): React.ReactElement => {
                       fontWeight: '200',
                       color: white,
                       marginTop: 5,
-                      minWidth: 120,
+                      minWidth: 150,
                     }}
                   > <Text
                   style={{
@@ -253,9 +253,9 @@ const PlanHome = ({ navigation }): React.ReactElement => {
                     fontWeight: '200',
                     color: primary,
                     marginTop: 5,
-                    minWidth: 120,
+                    minWidth: 150,
                   }}
-                >Side: </Text> {item.title}
+                >Side: </Text> {weekplan.meals[getID(item.id)/3].side}
                   </Text>
                   <Text
                     style={{
@@ -274,7 +274,7 @@ const PlanHome = ({ navigation }): React.ReactElement => {
                     minWidth: 120,
                   }}
                 >Fruits: </Text>
-                    {item.title}
+                    {weekplan.meals[getID(item.id)/3].fruits}
                   </Text>
                   </View>
                   <View style={{flex:1, marginLeft: 135, marginTop: 15, marginBottom: -25}}>
@@ -320,12 +320,13 @@ const PlanHome = ({ navigation }): React.ReactElement => {
   }
 
   return ( 
-    <SafeAreaView
+    <View
         style={{
           flex: 1,
           backgroundColor: grey,
         }}
       >
+        <StatusBar  barStyle="dark-content" />
           <FlatList
             data={Meals}
             renderItem={MealCard}
@@ -334,7 +335,7 @@ const PlanHome = ({ navigation }): React.ReactElement => {
             />
 
       
-    </SafeAreaView>
+    </View>
 
   )
 }

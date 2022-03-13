@@ -46,7 +46,7 @@ const height_logo = height * 0.28
 
 const SplashScreen = ({ navigation }): React.ReactElement => {
   return (
-    <View style={{ flex: 1, backgroundColor: primary }}>
+    <View style={{ flex: 1, backgroundColor: grey }}>
       <StatusBar barStyle="light-content" />
       <SplashHeaderView>
         <Animatable.Image
@@ -58,7 +58,7 @@ const SplashScreen = ({ navigation }): React.ReactElement => {
         />
       </SplashHeaderView>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <SplashTitle>Antiddiction</SplashTitle>
+        <SplashTitle>MealThyme</SplashTitle>
         <SplashText>Fill out this survey before using the app</SplashText>
         <SplashButtonView>
           <StyledButton
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: primary,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingVertical: 50,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     height: height_logo,
   },
   title: {
-    color: '#05375a',
+    color: primary,
     fontSize: 30,
     fontWeight: 'bold',
   },

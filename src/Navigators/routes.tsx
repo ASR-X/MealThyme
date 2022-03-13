@@ -18,7 +18,7 @@ export enum MainRoutes {
   DateList = 'Plan',
   Analytics = 'Trends',
   Connect = 'Connect',
-  QRCode = 'QRCode',
+  QRCode = 'QR',
   PlanDetails = 'PlanDetails',
 }
 

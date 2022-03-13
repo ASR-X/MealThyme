@@ -17,18 +17,17 @@ import SplashScreen from '../Pages/SplashScreen'
 //Screens Main
 import NavBar from '../Pages/NavBar'
 
-const { primary, white, black } = Colors
+const { primary, grey, white, black } = Colors
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Question1 } from '../Pages/Question1'
 import { Question2 } from '../Pages/Question2'
 import { Question3 } from '../Pages/Question3'
 import { View, StyleSheet } from 'react-native'
 import { Question4 } from '../Pages/Question4'
-import { Question5 } from '../Pages/Question5'
-import { Question6 } from '../Pages/Question6'
-import { Question7 } from '../Pages/Question7'
-import { Question8 } from '../Pages/Question8'
-import { Question9 } from '../Pages/Question9'
+
+import {
+  DefaultTheme,
+} from '@react-navigation/native';
 
 export type resetParams = {
   mode: string
@@ -48,22 +47,15 @@ const fade = ({ current, closing }) => ({
 
 
 const SurveyNavigator = (): React.ReactElement => {
+
   return (
+    <View style={{ flex: 1, backgroundColor: grey }}>
     <MainStack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: 'transparent',
-        },
-        headerTintColor: black,
-        headerTransparent: true,
-        headerTitle: '',
-        headerLeft: () => null,
-        cardOverlay: () => (
-          <>
-            <QuestionHeaderView />
-            <View style={styles.footer} />
-          </>
-        ),
+        headerShown: false,
+        cardStyle:{
+          backgroundColor: grey
+        }
       }}
       initialRouteName={MainRoutes.SplashScreen}
     >
@@ -75,19 +67,15 @@ const SurveyNavigator = (): React.ReactElement => {
       <MainStack.Screen name={MainRoutes.Question2} component={Question2} />
       <MainStack.Screen name={MainRoutes.Question3} component={Question3} />
       <MainStack.Screen name={MainRoutes.Question4} component={Question4} />
-      <MainStack.Screen name={MainRoutes.Question5} component={Question5} />
-      <MainStack.Screen name={MainRoutes.Question6} component={Question6} />
-      <MainStack.Screen name={MainRoutes.Question7} component={Question7} />
-      <MainStack.Screen name={MainRoutes.Question8} component={Question8} />
-      <MainStack.Screen name={MainRoutes.Question9} component={Question9} />
     </MainStack.Navigator>
+    </View>
   )
 }
 
 const MainNavigator = (): React.ReactElement => {
   const [user, setuser] = useRecoilState(userstate)
   console.log(user)
-  if (!user.height) return <SurveyNavigator />
+  if (!user.completed) return <SurveyNavigator />
   else return <HomeNavigator />
   // return <HomeNavigator />
 }

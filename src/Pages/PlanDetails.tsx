@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-import React from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import { SafeAreaView, View, Text, Image, ActivityIndicator } from "react-native"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 import { useRecoilState } from "recoil"
@@ -15,6 +15,9 @@ const PlanDetails = ({navigation}) => {
     const [weekplan, setweekplan] = useRecoilState(weekplanstate)
     const today = new Date().getDate()
     const [loadarr, setloadarr] = React.useState([] as number[])
+    const [recipe, setrecipe] = React.useState('')
+
+
 
     const getName = () => {
         console.log(weekplan.selectedMeal)
@@ -30,7 +33,7 @@ const PlanDetails = ({navigation}) => {
         }
     }
 
-    const getImageId = () => {
+    const getImageId = useCallback (() => {
         switch (weekplan.selectedDish) {
             case 1:
                 return ( (weekplan.selectedDay - today) * 3 + weekplan.selectedMeal ) *3 + weekplan.selectedDish -1 
@@ -41,7 +44,20 @@ const PlanDetails = ({navigation}) => {
             default:
                 return ( (weekplan.selectedDay - today) * 3 + weekplan.selectedMeal + 1 ) *3 + weekplan.selectedDish -1
         }
-    }
+    }, [weekplan.selectedDay, weekplan.selectedMeal, weekplan.selectedDish] )
+
+    
+    useEffect(() => {
+        setrecipe('')
+        var id = getImageId()
+
+        fetch ('https://asrx.ngrok.io/recipe?id=' + id.toString()).then
+        (response => response.json()).then(data => {
+            console.log(data.recipe)
+            setrecipe(data.recipe)
+        })
+
+    }, [getImageId])
 
     return (
       <SafeAreaView
@@ -56,7 +72,7 @@ const PlanDetails = ({navigation}) => {
       }}>
 
         <View style={{
-            flex: 3,
+            flex: 2,
             height: '100%',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -80,7 +96,7 @@ const PlanDetails = ({navigation}) => {
                     width: '100%', }}
                 >
                 <Text style={{
-                    fontSize: 43,
+                    fontSize: 30,
                     fontWeight: 'bold',
                     color: weekplan.selectedDish==1 ? primary : white,
                     textAlign: 'center',
@@ -105,7 +121,7 @@ const PlanDetails = ({navigation}) => {
                     width: '100%', }}
                 >
                 <Text style={{
-                    fontSize: 43,
+                    fontSize: 30,
                     fontWeight: 'bold',
                     color: weekplan.selectedDish==2 ? primary : white ,
                     textAlign: 'center',
@@ -127,7 +143,7 @@ const PlanDetails = ({navigation}) => {
                     width: '100%', }}
                 >
                 <Text style={{
-                    fontSize: 43,
+                    fontSize: 30,
                     fontWeight: 'bold',
                     color: weekplan.selectedDish==3 ? primary : white ,
                     textAlign: 'center',
@@ -167,7 +183,7 @@ const PlanDetails = ({navigation}) => {
                 justifyContent: 'flex-start',
             }}>
             <Text style={{
-                fontSize: 43,
+                fontSize: 30,
                 fontWeight: 'bold',
                 color: white,
                 textAlign: 'center',
@@ -203,13 +219,17 @@ const PlanDetails = ({navigation}) => {
             />
 
             </View>
-            <Text style={{
-                marginTop: -20,
-                fontSize: 20,
-                color: white,
-            }}>
-                oaiwejfjpaweijfopawjeiofjawopfjepaweijfpouiaewfoipjaweiopfjopwaejpfjiawefiojpaweiopjfewijowaiopjoaiwjepfjiawiejfpjajefjaowijefjawpoefjoajweopifiopwajoeipfjoapjwefojoaiwejopfjaopefjwopa
-            </Text>
+            {
+                recipe.length > 0 ?<Text style={{
+                    marginTop: -20,
+                    fontSize: 20,
+                    color: white,
+                }}>
+                    {recipe.replace("&#39;", "")}
+                </Text> : 
+                <ActivityIndicator/>
+            }
+            
             </ScrollView>
         </View>
   
