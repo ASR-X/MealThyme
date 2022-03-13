@@ -1,17 +1,13 @@
 interface Meal {
-    protein: string,
-    grains: string,
-    vegetables: string,
-    dairy: string,
+    title:string,
+    entree: string,
+    side: string,
     fruits: string,
-    completed: boolean,
 }
 
 interface Recipe{
-    protein: string,
-    grains: string,
-    vegetables: string,
-    dairy: string,
+    entree: string,
+    side: string,
     fruits: string,
 }
 
@@ -20,6 +16,10 @@ interface WeekPlan {
     endDate : Date,
     meals: Meal[],
     recipes: Recipe[],
+    selectedDay: number,
+    selectedMeal: number,
+    selectedDish: number,
+    cIndex: number,
 }
 
 export default WeekPlan

@@ -45,6 +45,8 @@ const fade = ({ current, closing }) => ({
   },
 })
 
+
+
 const SurveyNavigator = (): React.ReactElement => {
   return (
     <MainStack.Navigator

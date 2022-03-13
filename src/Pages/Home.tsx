@@ -33,6 +33,8 @@ import {
   Dimensions,
   Button,
   TouchableOpacity,
+  StatusBar,
+  ActivityIndicator,
 } from 'react-native'
 
 import {
@@ -67,7 +69,6 @@ import { Ionicons, Fontisto } from '@expo/vector-icons'
 import weekplanstate from '../Recoil/weekplanstate'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Icon } from 'react-native-elements'
-import { stubFalse } from 'lodash'
 
 const Home = ({ route, navigation }): React.ReactElement => {
 
@@ -78,23 +79,59 @@ const Home = ({ route, navigation }): React.ReactElement => {
       title: 'Breakfast',
       expanded: true,
       checked: false,
+      loaded: false,
     },
     {
       id: '2',
       title: 'Lunch',
       expanded: false,
       checked: false,
+      loaded: false,
     },
     {
       id: '3',
       title: 'Dinner',
       expanded: false,
       checked: false,
+      loaded: false,
     },
   ])
 
-  const MealCard = ({item}): React.ReactElement => {
+  useEffect( () => setMeals(
+    [
+      {
+        id: '1',
+        title: 'Breakfast',
+        expanded: true,
+        checked: false,
+        loaded: false,
+      },
+      {
+        id: '2',
+        title: 'Lunch',
+        expanded: false,
+        checked: false,
+        loaded: false,
+      },
+      {
+        id: '3',
+        title: 'Dinner',
+        expanded: false,
+        checked: false,
+        loaded: false,
+      },
+    ]
+  ), [weekplan])
 
+  const today = new Date().getDate()
+
+  const getID = (id: string) => {
+    var convid = parseInt(id)
+    console.log(( (weekplan.selectedDay - today) * 3 + convid-1 ) *3)
+    return ( (weekplan.selectedDay - today) * 3 + convid-1 ) *3
+}
+
+  const MealCard = ({item}): React.ReactElement => {
     return (
       <TouchableOpacity onPress={() => {
         setMeals(prevState => {
@@ -117,15 +154,21 @@ const Home = ({ route, navigation }): React.ReactElement => {
       marginVertical: 7,
       paddingVertical: 7,
       borderWidth: 1,
-      borderColor: primary,
+      borderColor: item.id=='1' ? primary : white,
     }}>
      <View style={{
         flexDirection: "row",
         alignItems: 'center',
       }}>
 
-        <ProfilePicture resizeMode="cover"
-        source={require('../Assets/slider2.jpg')}></ProfilePicture>
+      <Image source={{uri: 'https://asrx.ngrok.io/image?id=' + getID(item.id), height: 150}}
+          style = {{
+            width: 40,
+            height: 40,
+            borderRadius: 20
+          }}
+          // style={ { flex:1, display: (item.loaded ? 'flex' : 'none') }}
+          />
 
     <View style={{
         marginHorizontal: 12,
@@ -138,116 +181,149 @@ const Home = ({ route, navigation }): React.ReactElement => {
       <Text
         style={{
           fontSize: 35,
-          fontWeight: '200',
-          color: primary,
+          fontWeight: item.id=='1' ? '300' : '100',
+          color: item.id=='1' ? primary : white,
         }}
       >
         {item.title}
-      </Text>
-      <Text
-        style={{
-          fontSize: 15,
-          fontWeight: '200',
-          color: white,
-        }}
-      >
-        English Continental
       </Text>
         </View>
           {item.expanded ? <Icon name="arrow-drop-up" type="material" color={white} /> : <Icon name="arrow-drop-down" type="material" color={white} /> }
       </View>
       {
         item.expanded ?
-          <View style={{ 
-            flex: 1,
-            marginVertical: 15,
-            flexDirection: 'column',
-          }}>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-            }}>
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}>
-                      <Image style={{
-                        maxHeight: 150,
-                        maxWidth: 150,
-                      }} resizeMode='contain' source={require('../Assets/slider2.jpg')} ></Image>
-                  </View>
-                <View style={{
-                  flex: 1,
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  minWidth: 200,
-                }}>
-                   <View style={{
-                  flex: 1,
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: '200',
-                      color: white,
-                      marginTop: 5,
-                    }}
-                  >
-                    Protein: {item.title}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: '200',
-                      color: white,
-                      marginTop: 5,
-                    }}
-                  > 
-                    Dairy: {item.title}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: '200',
-                      color: white,
-                      marginTop: 5,
-                    }}
-                  > 
-                    Grains: {item.title}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: '200',
-                      marginTop: 5,
-                      color: white,
-                    }}
-                  > 
-                    Fruits: {item.title}
-                  </Text>
-                  </View>
-                <View style={{flex:1}}>
-                  <TouchableOpacity style={{zIndex: 2}} onPress={() => { 
-                     setMeals(prevState => {
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flex: 1,
+          marginVertical: 15,
+        }}>
+              <View style={{
+                flex: 1, maxHeight: 150,
+              }}>
+                 <ActivityIndicator
+                      style={{ display: (item.loaded ? 'none' : 'flex'), zIndex: 2 }}
+                  />
+                <View> 
+                 <Image source={{uri: 'https://asrx.ngrok.io/image?id=' + getID(item.id)}} resizeMode="contain"
+                  onLoadEnd={ () => {
+                    setMeals(prevState => {
                       return prevState.map(meal => {
                         if (meal.id === item.id) {
-                          meal.checked = !meal.checked
+                          meal.loaded = true
                         }
                         return meal
-                      })
+                      }  
+                      )
                     })
-                  }}>
-                    <Icon name="check-circle" type="material" color={item.checked ? primary : white} />
+                  }}
+
+                  style={[{width: 1, height: 1,},
+                    item.loaded && {width: 150, height: 150,}]}
+                  />
+                </View>
+                  
+                {/* <Image style={{
+                    maxHeight: 150,
+                    maxWidth: 150,
+                  }} resizeMode='contain' source={require('../Assets/slider2.jpg')} ></Image> */}
+              </View>
+            <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: '200',
+                  color: white,
+                  flex:1
+                }}
+              >
+                <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: '200',
+                  color: primary,
+                }}
+              >Entreé: </Text>
+                {item.title}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: '200',
+                  color: white,
+                  flex:1
+                }}
+              > <Text
+              style={{
+                fontSize: 20,
+                fontWeight: '200',
+                color: primary,
+              }}
+            >Side: </Text> {item.title}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: '200',
+                  color: white,
+                  flex:1
+                }}
+              > <Text
+              style={{
+                fontSize: 20,
+                fontWeight: '200',
+                color: primary,
+              }}
+            >Fruits: </Text>
+                {item.title}
+              </Text>
+              </View>
+              <View style={{flex:1}}>
+              <TouchableOpacity style={{zIndex: 2}} onPress={() => {
+                if (item.id != '1' && item.id != '0') {
+                  return
+                }
+                const currentChecked = item.checked ? true : false
+                setMeals(prevState => {
+                  return prevState.map(meal => {
+                    if (meal.id === item.id) {
+                      meal.checked = !meal.checked
+                      if (meal.checked) {
+                        meal.expanded = !meal.expanded
+                      }
+                    }
+                    return meal
+                  })
+                })
+                setMeals(prevState => {
+                  return prevState.map(meal => {
+                    if (!currentChecked) {
+                      meal.id = (parseInt(meal.id) - 1) + ''
+                    }
+                    else{
+                      meal.id = (parseInt(meal.id) + 1) + ''
+                    }
+                    return meal
+                  })
+                })
+              }}>
+                    <Icon name="check-circle" type="material" color={item.checked ? primary : white} containerStyle={{height: 50, width: 50, alignContent: 'center', justifyContent: 'center'}} />
                   </TouchableOpacity>
                 </View>
                  </View>
             </View>
-          </View>
         :
         <></>
       }
@@ -255,16 +331,16 @@ const Home = ({ route, navigation }): React.ReactElement => {
     </TouchableOpacity>
   )
   }
-
   return (
-    <View style={{ flexGrow: 1, backgroundColor: white }}>
       <SafeAreaView
         style={{
-          flexGrow: 1,
+          flex: 1,
           backgroundColor: grey,
           //marginTop: 30,
         }}
       >
+         
+        <StatusBar barStyle="dark-content" />
         <View>
           <GreenOval />
         </View>
@@ -272,13 +348,14 @@ const Home = ({ route, navigation }): React.ReactElement => {
         <View style={{
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          marginTop: 200,
+          marginTop: 190,
           flex: 1
         }}>
           <View style={{
             flexDirection: 'column',
             justifyContent: 'flex-start',
             paddingLeft: 20,
+            marginBottom: 5,
           }}>
             <Text style={{
               fontSize: 50,
@@ -289,7 +366,7 @@ const Home = ({ route, navigation }): React.ReactElement => {
             <Text style={{
               fontSize: 50,
               fontWeight: 'bold',
-              color: white,}}>
+              color: primary,}}>
                 Glance
             </Text>
           </View>
@@ -297,12 +374,11 @@ const Home = ({ route, navigation }): React.ReactElement => {
             data={Meals}
             renderItem={MealCard}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={{ justifyContent: 'flex-start' }} 
+            contentContainerStyle={{ justifyContent: 'flex-start', paddingBottom:20}} 
           />
         </View>
 
       </SafeAreaView>
-    </View>
   )
 }
 

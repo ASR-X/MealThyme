@@ -767,5 +767,15 @@ export const GreenOval = styled.View`
     background-color: #74e774;
     transform: scale(9,14)
     margin-top: -450px
-    margin-left: 310px;
+    margin-left: 350px;
   `
+
+export const CenterGreenOval = styled.View`
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  background-color: #74e774;
+  transform: scale(9,14)
+  margin-top: -600px
+  align-self: center;
+`

@@ -15,10 +15,11 @@ export enum MainRoutes {
   Question9 = 'Question 9',
   Home = 'Home',
   NavBar = 'NavBar',
-  DateList = 'Calendar',
-  Analytics = 'Analytics',
+  DateList = 'Plan',
+  Analytics = 'Trends',
   Connect = 'Connect',
   QRCode = 'QRCode',
+  PlanDetails = 'PlanDetails',
 }
 
 export type MainStackParamList = {

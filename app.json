@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Vmware Dev",
-    "slug": "vmware-dev",
-    "scheme": "vnwaredev",
+    "name": "MealThyme",
+    "slug": "meal-thyme",
+    "scheme": "mealthyme",
     "android": {
-      "package": "com.vmwaredev"
+      "package": "com.mealthyme"
     },
     "userInterfaceStyle": "automatic"
   }
