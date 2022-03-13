@@ -40,7 +40,7 @@ const QRCode = ({ navigation }): React.ReactElement => {
             fontWeight: 'bold',
             padding: 15,
             marginTop: 10,
-            color: primary
+            color: primary,
           }}
         >
           Scan with Companion Therapist App

@@ -25,9 +25,7 @@ import { Question3 } from '../Pages/Question3'
 import { View, StyleSheet } from 'react-native'
 import { Question4 } from '../Pages/Question4'
 
-import {
-  DefaultTheme,
-} from '@react-navigation/native';
+import { DefaultTheme } from '@react-navigation/native'
 
 export type resetParams = {
   mode: string
@@ -44,30 +42,27 @@ const fade = ({ current, closing }) => ({
   },
 })
 
-
-
 const SurveyNavigator = (): React.ReactElement => {
-
   return (
     <View style={{ flex: 1, backgroundColor: grey }}>
-    <MainStack.Navigator
-      screenOptions={{
-        headerShown: false,
-        cardStyle:{
-          backgroundColor: grey
-        }
-      }}
-      initialRouteName={MainRoutes.SplashScreen}
-    >
-      <MainStack.Screen
-        name={MainRoutes.SplashScreen}
-        component={SplashScreen}
-      />
-      <MainStack.Screen name={MainRoutes.Question1} component={Question1} />
-      <MainStack.Screen name={MainRoutes.Question2} component={Question2} />
-      <MainStack.Screen name={MainRoutes.Question3} component={Question3} />
-      <MainStack.Screen name={MainRoutes.Question4} component={Question4} />
-    </MainStack.Navigator>
+      <MainStack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyle: {
+            backgroundColor: grey,
+          },
+        }}
+        initialRouteName={MainRoutes.SplashScreen}
+      >
+        <MainStack.Screen
+          name={MainRoutes.SplashScreen}
+          component={SplashScreen}
+        />
+        <MainStack.Screen name={MainRoutes.Question1} component={Question1} />
+        <MainStack.Screen name={MainRoutes.Question2} component={Question2} />
+        <MainStack.Screen name={MainRoutes.Question3} component={Question3} />
+        <MainStack.Screen name={MainRoutes.Question4} component={Question4} />
+      </MainStack.Navigator>
     </View>
   )
 }

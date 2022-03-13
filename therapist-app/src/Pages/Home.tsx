@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { ProgressRings } from '../Components/ProgressRings'
 import { ChonseSelect } from 'react-native-chonse-select'
-import {Patients} from '../Data/Patients'
+import { Patients } from '../Data/Patients'
 
 //Components
 import {
@@ -172,113 +172,139 @@ const Home = ({ route, navigation }): React.ReactElement => {
 
   // console.log(route.params.Home)
 
-  const PatientCard = ({item}): React.ReactElement => {
+  const PatientCard = ({ item }): React.ReactElement => {
     console.log(item)
     return (
-      <TouchableOpacity onPress={() => {
-        navigation.navigate(MainRoutes.Dashboard, { patient: item})
-      }}>
-    <View style={{
-      flexDirection: 'column',
-      flex: 1,
-      marginHorizontal: 12,
-      borderRadius: 15,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingRight: 12,
-      marginVertical: 7,
-      paddingVertical: 7,
-      borderWidth: 1,
-      borderColor: primary,
-    }}>
-     <View style={{
-        flexDirection: "row",
-        alignItems: 'center',
-      }}>
-
-        <View style={{
-            marginHorizontal: 12,
-            alignItems: 'left',
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate(MainRoutes.Dashboard, { patient: item })
+        }}
+      >
+        <View
+          style={{
             flexDirection: 'column',
+            flex: 1,
+            marginHorizontal: 12,
+            borderRadius: 15,
+            alignItems: 'center',
             justifyContent: 'center',
-            flex: 2
-          }}>
-            <Text
+            paddingRight: 12,
+            marginVertical: 7,
+            paddingVertical: 7,
+            borderWidth: 1,
+            borderColor: primary,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <View
               style={{
-                fontSize: 35,
-                fontWeight: '300',
-                color: primary,
+                marginHorizontal: 12,
+                alignItems: 'left',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                flex: 2,
               }}
             >
-              {item.name}
+              <Text
+                style={{
+                  fontSize: 35,
+                  fontWeight: '300',
+                  color: primary,
+                }}
+              >
+                {item.name}
+              </Text>
+            </View>
+            <Icon name="arrow-right" type="material" color={primary} />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+              paddingRight: 12,
+              paddingLeft: 24,
+              marginTop: 12,
+            }}
+          >
+            <Text style={{ fontSize: 15, color: white }}>Age - {item.age}</Text>
+            <Text style={{ fontSize: 15, color: white }}>
+              Weight - {item.weight}lbs.
+            </Text>
+            <Text style={{ fontSize: 15, color: white }}>
+              Gender - {item.gender}
             </Text>
           </View>
-          <Icon name="arrow-right" type="material" color={primary} />
-      </View>
-      <View style={{
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: '100%',
-        paddingRight: 12,
-        paddingLeft:24,
-        marginTop: 12,
-      }}>
-        <Text style={{ fontSize: 15, color: white }}>Age - {item.age}</Text>
-        <Text style={{ fontSize: 15, color: white }}>Weight - {item.weight}lbs.</Text>
-        <Text style={{ fontSize: 15, color: white }}>Gender - {item.gender}</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-    )}
-
+        </View>
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <SafeAreaView
-    style={{
-      flex: 1,
-      backgroundColor: grey,
-      //marginTop: 30,
-    }}
-  >
-     
-    <StatusBar barStyle="light-content" />
+      style={{
+        flex: 1,
+        backgroundColor: grey,
+        //marginTop: 30,
+      }}
+    >
+      <StatusBar barStyle="light-content" />
 
-
-    <View style={{
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      marginTop: 30,
-      flex: 1
-    }}>
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        paddingLeft: 20,
-        marginBottom: 5,
-      }}>
-        <Text style={{
-          fontSize: 50,
-          fontWeight: 'bold',
-          color: primary,}}>
-            Patients
-        </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(MainRoutes.Plus)}
-          style={{ marginHorizontal: 20, flex:1, alignItems: 'flex-end', justifyContent: 'center' }}
+      <View
+        style={{
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          marginTop: 30,
+          flex: 1,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            paddingLeft: 20,
+            marginBottom: 5,
+          }}
         >
-          <Ionicons name={'add-outline'} size={30} color={primary} />
-        </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: 'bold',
+              color: primary,
+            }}
+          >
+            Patients
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(MainRoutes.Plus)}
+            style={{
+              marginHorizontal: 20,
+              flex: 1,
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+            }}
+          >
+            <Ionicons name={'add-outline'} size={30} color={primary} />
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={route.params.Home ? Patients : []}
+          renderItem={PatientCard}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{
+            justifyContent: 'flex-start',
+            paddingBottom: 20,
+            marginTop: 20,
+          }}
+        />
       </View>
-      <FlatList
-        data={route.params.Home ? Patients : []}
-        renderItem={PatientCard}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ justifyContent: 'flex-start', paddingBottom:20, marginTop: 20}} 
-      />
-    </View>
-
-  </SafeAreaView>
+    </SafeAreaView>
   )
 }
 

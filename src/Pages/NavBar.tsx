@@ -1,5 +1,12 @@
 import React, { useRef, useState } from 'react'
-import { SafeAreaView, StatusBar, TouchableOpacity, View, Text, ImageBackground } from 'react-native'
+import {
+  SafeAreaView,
+  StatusBar,
+  TouchableOpacity,
+  View,
+  Text,
+  ImageBackground,
+} from 'react-native'
 
 //Screens
 import Home from './Home'
@@ -21,11 +28,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { MainRoutes } from './../Navigators/routes'
 
 //Colors
-import { CenterGreenOval, Colors, ProfilePicture, QuestionText } from '../Components/styles'
+import {
+  CenterGreenOval,
+  Colors,
+  ProfilePicture,
+  QuestionText,
+} from '../Components/styles'
 import { DrawerActions, NavigationContainer } from '@react-navigation/native'
 import QRCode from './QRCode'
 import { height, width } from 'styled-system'
-import { grey100, transparent } from 'react-native-paper/lib/typescript/styles/colors'
+import {
+  grey100,
+  transparent,
+} from 'react-native-paper/lib/typescript/styles/colors'
 import PlanDetails from './PlanDetails'
 import { FlatList } from 'react-native-gesture-handler'
 import weekplanstate from '../Recoil/weekplanstate'
@@ -51,7 +66,7 @@ const config = {
     restDisplacementThreshold: 0.01,
     restSpeedThreshold: 0.01,
   },
-};
+}
 
 const NavBar = (): React.ReactElement => {
   const Tab = createBottomTabNavigator()
@@ -70,7 +85,7 @@ const NavBar = (): React.ReactElement => {
           } else if (route.name === 'Trends') {
             iconName = focused ? 'analytics' : 'analytics-outline'
           } else if (route.name === 'QR') {
-            iconName =  focused ? 'qr-code' : 'qr-code-outline'
+            iconName = focused ? 'qr-code' : 'qr-code-outline'
           }
 
           // You can return any component that you like here!
@@ -83,7 +98,7 @@ const NavBar = (): React.ReactElement => {
         tabBarBackgroundColor: grey,
         tabBarStyle: {
           backgroundColor: grey,
-          paddingTop:10
+          paddingTop: 10,
         },
       })}
     >
@@ -101,30 +116,24 @@ export default NavBar
 const HomeStackScreen = ({ navigation }) => {
   return (
     <HomeStack.Navigator
-    screenOptions={{
-      headerShown: false,
-      
-    }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
-      <HomeStack.Screen
-      
-        name={MainRoutes.Home}
-        component={Home}
-      />
+      <HomeStack.Screen name={MainRoutes.Home} component={Home} />
     </HomeStack.Navigator>
   )
 }
 
-var getDaysInMonth = function(month,year) {
+var getDaysInMonth = function (month, year) {
   // Here January is 1 based
   //Day 0 is the last day in the previous month
- return new Date(year, month + 1, 0).getDate();
-// Here January is 0 based
-// return new Date(year, month+1, 0).getDate();
-};
+  return new Date(year, month + 1, 0).getDate()
+  // Here January is 0 based
+  // return new Date(year, month+1, 0).getDate();
+}
 
-
-const PlanHeader = ({navigation}) => {
+const PlanHeader = ({ navigation }) => {
   const weeks = []
   const letterDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
   const mealNames = ['Breakfast', 'Lunch', 'Dinner']
@@ -145,194 +154,233 @@ const PlanHeader = ({navigation}) => {
   const swiperRef = useRef(null)
 
   var compensate = 1
-  for (let i = 0 ; i < 3; i++) {
+  for (let i = 0; i < 3; i++) {
     var week = []
     for (let j = 0; j < 7; j++) {
       if (today + j + i * 7 <= getDaysInMonth(cmonth, cyear)) {
-        week.push( { day: today + j + i * 7, weekday: j, week: i} )
-      }
-      else {
-        week.push( { day: compensate, weekday: j, week: i } )
+        week.push({ day: today + j + i * 7, weekday: j, week: i })
+      } else {
+        week.push({ day: compensate, weekday: j, week: i })
         compensate++
       }
-      
     }
     weeks.push(week)
   }
 
   const [weekstate, setweekstate] = useState(weeks)
 
-  const renderWeek = ({item}) => {
+  const renderWeek = ({ item }) => {
     return (
-      <View style={{
-        flexDirection: 'column',
-        justifyContent: 'center',
-        width: 44,
-        // backgroundColor: 'white',
-        alignItems: 'center',
-        height: 45,
-      }}
+      <View
+        style={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          width: 44,
+          // backgroundColor: 'white',
+          alignItems: 'center',
+          height: 45,
+        }}
       >
-        <TouchableOpacity onPress={() => {
-          var newweeks = []
-          for (let i = 0 ; i < 3; i++) {
-            newweeks.push( weeks[(item.week + i) %3])
-          }
-          setweekplan({ ...weekplan, selectedDay: item.day, selectedDish: 0})
-          setweekstate(newweeks)
-          
-        } } style={{flex:1}}>
-          
-          {
-            item.day == weekplan.selectedDay ? 
-            <View style={{flex:1, alignItems: 'center'}} >
+        <TouchableOpacity
+          onPress={() => {
+            var newweeks = []
+            for (let i = 0; i < 3; i++) {
+              newweeks.push(weeks[(item.week + i) % 3])
+            }
+            setweekplan({ ...weekplan, selectedDay: item.day, selectedDish: 0 })
+            setweekstate(newweeks)
+          }}
+          style={{ flex: 1 }}
+        >
+          {item.day == weekplan.selectedDay ? (
+            <View style={{ flex: 1, alignItems: 'center' }}>
               <Text
-              style={{
-                fontSize: 25,
-                fontWeight: 'bold',
-                color: grey,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-              }}
-            >
-              {letterDays[item.weekday]}
-            </Text>
-          <Text
-          style={{
-            fontSize: 15,
-            color: 'gray',
-            textAlign: 'center',
-            textAlignVertical: 'center',
-          }} >
-          {item.day}
-        </Text>
-        <MaterialCommunityIcons name="leaf" size={12} color={grey} style={{marginTop: -3}} />
-        </View>
-          :
-          <View>
+                style={{
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                  color: grey,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                }}
+              >
+                {letterDays[item.weekday]}
+              </Text>
               <Text
-              style={{
-                fontSize: 25,
-                fontWeight: 'bold',
-                color: grey,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-              }}
-            >
-              {letterDays[item.weekday]}
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                color: 'gray',
-                textAlign: 'center',
-                textAlignVertical: 'center',
-              }}
-            >
-              {item.day}
-            </Text>
+                style={{
+                  fontSize: 15,
+                  color: 'gray',
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                }}
+              >
+                {item.day}
+              </Text>
+              <MaterialCommunityIcons
+                name="leaf"
+                size={12}
+                color={grey}
+                style={{ marginTop: -3 }}
+              />
             </View>
-          }
-          
-        
+          ) : (
+            <View>
+              <Text
+                style={{
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                  color: grey,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                }}
+              >
+                {letterDays[item.weekday]}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: 'gray',
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                }}
+              >
+                {item.day}
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
       </View>
     )
   }
 
-
   return (
-    <SafeAreaView style={{
-      backgroundColor: primary,
-      height: 120, }}>
-        {
-       selectedMeal == -1 ? 
-     <Swiper ref={swiperRef} style={{ alignItems: 'center', justifyContent: 'center'
-     }} showsButtons showsPagination={false} loop={true} nextButton={<Text style={{ fontSize:50, color: grey}}>›</Text>} prevButton={<Text style={{ fontSize:50, color: grey}}>‹</Text>}>
-       <View style={{
-          width:'100%',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: primary,
-       }}>
-         <FlatList
-          data={weekstate[0]}
-          renderItem={renderWeek}
-          horizontal={true}
-          keyExtractor={(item) => item.day}
-          contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width:'100%', flex:1}} 
-         >
-         </FlatList>
-       </View>
-       <View style={{
-          width:'100%',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: primary,
-       }}>
-          <FlatList
-          data={weekstate[1]}
-          renderItem={renderWeek}
-          horizontal={true}
-          keyExtractor={(item) => item.day}
-          contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width:'100%', flex:1}} 
-         >
-         </FlatList>
-       </View>
-       <View style={{
-          width:'100%',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: primary,
-       }}>
-         <FlatList
-          data={weekstate[2]}
-          renderItem={renderWeek}
-          horizontal={true}
-          keyExtractor={(item) => item.day}
-          contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width:'100%', flex:1}} 
-         >
-         </FlatList>
-       </View>
-     </Swiper>
-     :
-     <View 
+    <SafeAreaView
       style={{
-        flex  : 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
+        backgroundColor: primary,
+        height: 120,
       }}
-     >
-      <TouchableOpacity onPress={() => {
-          setweekplan({ ...weekplan, selectedMeal: -1, selectedDish: 0 })
-            navigation.navigate(MainRoutes.DateList)
-        }}
-        style={
-          {backgroundColor: 'transparent', flexDirection: 'row', position: 'absolute', top: 0, left: 0, flex: 1, paddingHorizontal: 10, paddingVertical: 0, justifyContent: 'center', alignItems: 'center', zIndex: 4}
-        }
+    >
+      {selectedMeal == -1 ? (
+        <Swiper
+          ref={swiperRef}
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+          showsButtons
+          showsPagination={false}
+          loop={true}
+          nextButton={<Text style={{ fontSize: 50, color: grey }}>›</Text>}
+          prevButton={<Text style={{ fontSize: 50, color: grey }}>‹</Text>}
         >
-         <Text style={{ fontSize:50, color: grey}}>‹</Text>
-          
-      </TouchableOpacity>
-       
-      <View 
-        style={{
-          flex  : 1,
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-      >
-      <Text style={{fontSize: 50, color: grey}}>
-        {mealNames[selectedMeal]}
-        </Text>
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: primary,
+            }}
+          >
+            <FlatList
+              data={weekstate[0]}
+              renderItem={renderWeek}
+              horizontal={true}
+              keyExtractor={(item) => item.day}
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                flex: 1,
+              }}
+            ></FlatList>
+          </View>
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: primary,
+            }}
+          >
+            <FlatList
+              data={weekstate[1]}
+              renderItem={renderWeek}
+              horizontal={true}
+              keyExtractor={(item) => item.day}
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                flex: 1,
+              }}
+            ></FlatList>
+          </View>
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: primary,
+            }}
+          >
+            <FlatList
+              data={weekstate[2]}
+              renderItem={renderWeek}
+              horizontal={true}
+              keyExtractor={(item) => item.day}
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                flex: 1,
+              }}
+            ></FlatList>
+          </View>
+        </Swiper>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setweekplan({ ...weekplan, selectedMeal: -1, selectedDish: 0 })
+              navigation.navigate(MainRoutes.DateList)
+            }}
+            style={{
+              backgroundColor: 'transparent',
+              flexDirection: 'row',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              flex: 1,
+              paddingHorizontal: 10,
+              paddingVertical: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 4,
+            }}
+          >
+            <Text style={{ fontSize: 50, color: grey }}>‹</Text>
+          </TouchableOpacity>
+
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ fontSize: 50, color: grey }}>
+              {mealNames[selectedMeal]}
+            </Text>
+          </View>
         </View>
-      </View>
-}
-   </SafeAreaView>
-  ) 
+      )}
+    </SafeAreaView>
+  )
 }
 
 const PlanStackScreen = ({ navigation }) => {
@@ -340,19 +388,12 @@ const PlanStackScreen = ({ navigation }) => {
     <PlanStack.Navigator
       screenOptions={{
         headerMode: 'float',
-        header: (props) => <PlanHeader {...props} />, 
+        header: (props) => <PlanHeader {...props} />,
       }}
     >
-      <PlanStack.Screen
-        name={MainRoutes.DateList}
-        component={PlanHome}
-      />
+      <PlanStack.Screen name={MainRoutes.DateList} component={PlanHome} />
 
-      <PlanStack.Screen
-        name={MainRoutes.PlanDetails}
-        component={PlanDetails}
-      />
-
+      <PlanStack.Screen name={MainRoutes.PlanDetails} component={PlanDetails} />
     </PlanStack.Navigator>
   )
 }
@@ -364,10 +405,7 @@ const GraphsStackScreen = ({ navigation }) => {
         headerShown: false,
       }}
     >
-      <GraphStack.Screen
-        name={MainRoutes.Analytics}
-        component={Analytics}
-      />
+      <GraphStack.Screen name={MainRoutes.Analytics} component={Analytics} />
     </GraphStack.Navigator>
   )
 }

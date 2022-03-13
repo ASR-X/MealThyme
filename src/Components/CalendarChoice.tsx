@@ -4,7 +4,6 @@ import { FlatList, TouchableOpacity, StyleSheet, View } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { marginBottom } from 'styled-system'
 
-
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import { QuestionText, Colors } from './styles'

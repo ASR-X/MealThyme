@@ -28,14 +28,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { justifyContent } from 'styled-system'
 import { selector, useRecoilState } from 'recoil'
 
-
 import { Keyboard } from 'react-native'
 import userstate from '../Recoil/userstate'
 
 const { primary, white, grey, black } = Colors
 
 export const Question1 = ({ navigation }): React.ReactElement => {
-  const [user, setuser] = useRecoilState(userstate);
+  const [user, setuser] = useRecoilState(userstate)
 
   const answers = [
     {
@@ -69,7 +68,6 @@ export const Question1 = ({ navigation }): React.ReactElement => {
       </Animatable.View>
     </View>
   )
-
 }
 
 const styles = StyleSheet.create({

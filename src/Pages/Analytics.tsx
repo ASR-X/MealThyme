@@ -48,47 +48,48 @@ import VerticalSwiper from '../Components/VerticalSwiper'
 
 // Colors
 const { primary, white, grey, black } = Colors
-import { Dimensions } from "react-native";
+import { Dimensions } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import { DEFAULT_X_LABELS_HEIGHT_PERCENTAGE } from 'react-native-chart-kit/dist/AbstractChart'
 
 const Analytics = ({ navigation }): React.ReactElement => {
+  const screenWidth = Dimensions.get('window').width
 
-  const screenWidth = Dimensions.get("window").width;
-
-  const [ allgraphs, setallgraphs ] = useState([])
+  const [allgraphs, setallgraphs] = useState([])
   const [loading, setloading] = useState(true)
 
   const stable = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
     datasets: [
       {
         data: [20, 45, 28, 80, 99, 43],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-        strokeWidth: 2 // optional
-      }
+        strokeWidth: 2, // optional
+      },
     ],
-    legend: ["Rainy Days"] // optional
-  };
+    legend: ['Rainy Days'], // optional
+  }
 
-  const data = async(color) => {
-    return fetch('https://asrx.ngrok.io/statistics/').then(async(response) => {
+  const data = async (color) => {
+    return fetch('https://asrx.ngrok.io/statistics/').then(async (response) => {
       const response_ser = await response.json()
       var lbels = new Array(21).fill(0)
       var treturn = {
         labels: lbels.map((x, i) => i),
         datasets: [
-        {
-          data: response_ser.stat.map((_, i) => parseInt(response_ser.stat[i])),
-          color: () => color,
-        }
-      ]
+          {
+            data: response_ser.stat.map((_, i) =>
+              parseInt(response_ser.stat[i])
+            ),
+            color: () => color,
+          },
+        ],
       }
       return treturn
     })
   }
 
-  const fetchdata = async() => {
+  const fetchdata = async () => {
     var alldata = []
     alldata.push(await data(primary))
     alldata.push(await data('#E77474'))
@@ -99,59 +100,63 @@ const Analytics = ({ navigation }): React.ReactElement => {
     setloading(false)
   }
 
-
-  useEffect( () => {
+  useEffect(() => {
     fetchdata()
   }, [])
 
   const chartConfig = (color) => {
     return {
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientToOpacity: 0,
-    color: () => color,
-    barPercentage: 0.5,
-    propsForBackgroundLines: {
-      strokeDasharray: [],
-      strokeWidth: 1,
-      fillOpacity: 50,
+      backgroundGradientFromOpacity: 0,
+      backgroundGradientToOpacity: 0,
+      color: () => color,
+      barPercentage: 0.5,
+      propsForBackgroundLines: {
+        strokeDasharray: [],
+        strokeWidth: 1,
+        fillOpacity: 50,
+      },
     }
-    }
-  };
+  }
 
   console.log(allgraphs[0])
-  
+
   return (
     <View
-    style={{
-      flex: 1,
-      backgroundColor: grey,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingTop: 50
-      //marginTop: 30,
-    }}>
-      <StatusBar barStyle="light-content" />
-      {
-        loading ? <ActivityIndicator size="large" color={primary} /> :
-      
-      <ScrollView style={{
+      style={{
         flex: 1,
-        flexDirection: 'column',
-        paddingLeft: 10,
-
-      }} > 
-          <Text style={{
-            fontSize: 50,
-            fontWeight: 'bold',
-            color: primary,}}>
-              Meal Consistency
+        backgroundColor: grey,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 50,
+        //marginTop: 30,
+      }}
+    >
+      <StatusBar barStyle="light-content" />
+      {loading ? (
+        <ActivityIndicator size="large" color={primary} />
+      ) : (
+        <ScrollView
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            paddingLeft: 10,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: 'bold',
+              color: primary,
+            }}
+          >
+            Meal Consistency
           </Text>
           <LineChart
             data={allgraphs[0] ? allgraphs[0] : stable}
             width={screenWidth}
             height={220}
             chartConfig={chartConfig(white)}
-            withInnerLines= {false} // optional
+            withInnerLines={false} // optional
             withShadow={false} // optional
             withHorizontalLabels={false} // optional
             style={{
@@ -168,18 +173,21 @@ const Analytics = ({ navigation }): React.ReactElement => {
             withDots={false}
           />
 
-      <Text style={{
-            fontSize: 50,
-            fontWeight: 'bold',
-            color: "#E77474",}}>
-              BMI
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: 'bold',
+              color: '#E77474',
+            }}
+          >
+            BMI
           </Text>
           <LineChart
             data={allgraphs[1] ? allgraphs[1] : stable}
             width={screenWidth}
             height={220}
             chartConfig={chartConfig(white)}
-            withInnerLines= {false} // optional
+            withInnerLines={false} // optional
             withShadow={false} // optional
             withHorizontalLabels={false} // optional
             style={{
@@ -195,11 +203,14 @@ const Analytics = ({ navigation }): React.ReactElement => {
             }}
             withDots={false}
           />
-          <Text style={{
-            fontSize: 50,
-            fontWeight: 'bold',
-            color: '#e7d874',}}>
-              Vitamin B
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: 'bold',
+              color: '#e7d874',
+            }}
+          >
+            Vitamin B
           </Text>
           <LineChart
             data={allgraphs[2] ? allgraphs[2] : stable}
@@ -207,7 +218,7 @@ const Analytics = ({ navigation }): React.ReactElement => {
             height={220}
             chartConfig={chartConfig(white)}
             withShadow={false}
-            withInnerLines= {false} // optional
+            withInnerLines={false} // optional
             withHorizontalLabels={false} // optional
             style={{
               marginTop: 10,
@@ -222,18 +233,21 @@ const Analytics = ({ navigation }): React.ReactElement => {
             }}
             withDots={false}
           />
-          <Text style={{
-            fontSize: 50,
-            fontWeight: 'bold',
-            color: '#747ee7',}}>
-              Vitamin C
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: 'bold',
+              color: '#747ee7',
+            }}
+          >
+            Vitamin C
           </Text>
           <LineChart
-            data={allgraphs[3] ? allgraphs[3] :stable}
+            data={allgraphs[3] ? allgraphs[3] : stable}
             width={screenWidth}
             height={220}
             chartConfig={chartConfig(white)}
-            withInnerLines= {false} // optional
+            withInnerLines={false} // optional
             withShadow={false} // optional
             withHorizontalLabels={false} // optional
             style={{
@@ -249,8 +263,8 @@ const Analytics = ({ navigation }): React.ReactElement => {
             }}
             withDots={false}
           />
-    </ScrollView>
-}
+        </ScrollView>
+      )}
     </View>
   )
 }

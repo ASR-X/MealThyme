@@ -27,41 +27,40 @@ const { primary, white, grey, black } = Colors
 const HomeStack = createStackNavigator()
 const DashboardStack = createStackNavigator()
 
-
-const HomeNavigator = ():React.ReactElement => {
+const HomeNavigator = (): React.ReactElement => {
   return (
-    <View style={{ flex: 1, backgroundColor: grey}}>
-    <HomeStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <HomeStack.Screen
-        name={MainRoutes.Home}
-        component={Home}
-        initialParams={{ Home: false }}
-        options={{
+    <View style={{ flex: 1, backgroundColor: grey }}>
+      <HomeStack.Navigator
+        screenOptions={{
           headerShown: false,
         }}
-      />
+      >
+        <HomeStack.Screen
+          name={MainRoutes.Home}
+          component={Home}
+          initialParams={{ Home: false }}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-      <HomeStack.Screen
-        component={Plus}
-        name={MainRoutes.Plus}
-        options={{
-          title: 'Plus sign',
-          headerShown: false,
-        }}
-      />
+        <HomeStack.Screen
+          component={Plus}
+          name={MainRoutes.Plus}
+          options={{
+            title: 'Plus sign',
+            headerShown: false,
+          }}
+        />
 
-      <HomeStack.Screen
-        component={Dashboard}
-        name={MainRoutes.Dashboard}
-        options={{
-          headerShown: false,
-        }}
-      />
-    </HomeStack.Navigator>
+        <HomeStack.Screen
+          component={Dashboard}
+          name={MainRoutes.Dashboard}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </HomeStack.Navigator>
     </View>
   )
 }

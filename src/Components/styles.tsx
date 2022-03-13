@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Constants from 'expo-constants'
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import {
   Text,
@@ -578,23 +578,23 @@ export const QuestionHeaderView = styled.View`
 `
 export const iosStyles = StyleSheet.create({
   thumb: {
-      backgroundColor: white,
-      borderRadius: 30 / 2,
-      height: 30,
-      shadowColor: black,
-      shadowOffset: {
-          width: 0,
-          height: 2,
-      },
-      shadowOpacity: 0.35,
-      shadowRadius: 2,
-      width: 30,
+    backgroundColor: white,
+    borderRadius: 30 / 2,
+    height: 30,
+    shadowColor: black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 2,
+    width: 30,
   },
   track: {
-      borderRadius: 1,
-      height: 2,
+    borderRadius: 1,
+    height: 2,
   },
-});
+})
 
 export const SplashFooter = styled.View`
   flex: 1;
@@ -621,7 +621,7 @@ export const SplashText = styled.Text`
 `
 export const SplashButtonView = styled.View`
   align-items: flex-end;
-  margin-top:30px;
+  margin-top: 30px;
 `
 
 export const SplashSignIn = styled.View`

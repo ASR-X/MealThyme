@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StatusBar, Text, View, StyleSheet } from 'react-native'
-import {Slider} from '@miblanchard/react-native-slider'
+import { Slider } from '@miblanchard/react-native-slider'
 
 import { MainRoutes } from '../Navigators/routes'
 import {
@@ -28,13 +28,11 @@ import { BoxChoice } from '../Components/BoxChoice'
 import { ActivityIndicator } from 'react-native-paper'
 import weekplanstate from '../Recoil/weekplanstate'
 
-
-
 const { primary, white, grey, black } = Colors
 
 export const Question4 = ({ navigation }): React.ReactElement => {
-  const [user, setuser] = useRecoilState(userstate);
-  const [weekplan, setweekplan] = useRecoilState(weekplanstate);
+  const [user, setuser] = useRecoilState(userstate)
+  const [weekplan, setweekplan] = useRecoilState(weekplanstate)
   const [loading, setLoading] = useState(false)
 
   const answers = [
@@ -83,30 +81,33 @@ export const Question4 = ({ navigation }): React.ReactElement => {
         body: JSON.stringify(newdata),
       }
       fetch('https://asrx.ngrok.io/getMeals', requestOptions)
-      .then(async (response) => {
-        const response_ser = await response.json()
-        var meals = []
-        for (let i = 0; i < response_ser.meals.length; i+=3) {
-          var meal = {
-            entree: response_ser.meals[i],
-            side: response_ser.meals[i+1],
-            fruits: response_ser.meals[i+2],
+        .then(async (response) => {
+          const response_ser = await response.json()
+          var meals = []
+          for (let i = 0; i < response_ser.meals.length; i += 3) {
+            var meal = {
+              entree: response_ser.meals[i],
+              side: response_ser.meals[i + 1],
+              fruits: response_ser.meals[i + 2],
+            }
+            meals.push(meal)
           }
-          meals.push(meal)
-        }
-        var completedMeals = new Array(meals.length /3).fill(0)
-        setweekplan({...weekplan, meals: meals, completedMeals: completedMeals})
-        setuser({completed: true})
-      })
-      .catch((error) => {
-        console.log('error', error)
-      })
+          var completedMeals = new Array(meals.length / 3).fill(0)
+          setweekplan({
+            ...weekplan,
+            meals: meals,
+            completedMeals: completedMeals,
+          })
+          setuser({ completed: true })
+        })
+        .catch((error) => {
+          console.log('error', error)
+        })
     }
   }
   useEffect(() => {
     getMeals()
   }, [loading])
-
 
   return (
     <View style={{ flex: 1, backgroundColor: grey }}>
@@ -116,21 +117,21 @@ export const Question4 = ({ navigation }): React.ReactElement => {
         <QuestionTitle>Allergies & Dietary Restrictions</QuestionTitle>
         <BoxChoice props={answers} num={'allergies'} />
         <QuestionNextButton
-          onPress={async() => {
-            var rindex = new Array(8).fill("0")
+          onPress={async () => {
+            var rindex = new Array(8).fill('0')
             for (let i = 0; i < user.allergies.length; i++) {
-              rindex[parseInt(user.allergies[i]) - 1] = "1"
+              rindex[parseInt(user.allergies[i]) - 1] = '1'
             }
-            setuser({questions: [...user.questions, ...rindex]})
-            
+            setuser({ questions: [...user.questions, ...rindex] })
+
             setLoading(true)
           }}
         >
-          {
-            loading ?
+          {loading ? (
             <ActivityIndicator size="large" color={primary} />
-            :
-            <MaterialIcons name="navigate-next" color={primary} size={45} />}
+          ) : (
+            <MaterialIcons name="navigate-next" color={primary} size={45} />
+          )}
         </QuestionNextButton>
         <QuestionPrevButton
           onPress={() => {

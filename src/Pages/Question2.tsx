@@ -1,5 +1,12 @@
 import React from 'react'
-import { StatusBar, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard } from 'react-native'
+import {
+  StatusBar,
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  TextInput,
+  Keyboard,
+} from 'react-native'
 
 import { MainRoutes } from '../Navigators/routes'
 import {
@@ -32,15 +39,15 @@ export const Question2 = ({ navigation }): React.ReactElement => {
   const [inches, onChangeInches] = React.useState(null)
   const [age, onChangeAge] = React.useState(null)
 
-  const [user, setuserattri] = useRecoilState(userstate);
+  const [user, setuserattri] = useRecoilState(userstate)
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={{ flex: 1, backgroundColor: grey}}>
+      <View style={{ flex: 1, backgroundColor: grey }}>
         <StatusBar barStyle="light-content" />
         <QuestionHeaderView />
         <Animatable.View style={styles.footer}>
-          <View style={{ flex: 1}}>
+          <View style={{ flex: 1 }}>
             <QuestionTitle>Height (Feet)</QuestionTitle>
             <TextInput
               selectionColor={primary}
@@ -49,7 +56,7 @@ export const Question2 = ({ navigation }): React.ReactElement => {
               placeholder="5"
               keyboardType="numeric"
             />
-             <QuestionTitle>Height (Inches)</QuestionTitle>
+            <QuestionTitle>Height (Inches)</QuestionTitle>
             <TextInput
               selectionColor={primary}
               style={styles.textInput}
@@ -77,18 +84,23 @@ export const Question2 = ({ navigation }): React.ReactElement => {
           <QuestionNextButton
             onPress={() => {
               if (feet && inches && weight) {
-                setuserattri({height: feet + '\'' + inches, weight: weight, age: age});
-                navigation.navigate(MainRoutes.Question3);
+                setuserattri({
+                  height: feet + "'" + inches,
+                  weight: weight,
+                  age: age,
+                })
+                navigation.navigate(MainRoutes.Question3)
               }
-            }} >
-            <MaterialIcons name="navigate-next" color={primary} size={45} />
-           </QuestionNextButton>
-          <QuestionPrevButton
-          onPress={() => {
-            navigation.navigate(MainRoutes.Question1)
-          }}
+            }}
           >
-          <MaterialIcons name="navigate-before" color={primary} size={45} />
+            <MaterialIcons name="navigate-next" color={primary} size={45} />
+          </QuestionNextButton>
+          <QuestionPrevButton
+            onPress={() => {
+              navigation.navigate(MainRoutes.Question1)
+            }}
+          >
+            <MaterialIcons name="navigate-before" color={primary} size={45} />
           </QuestionPrevButton>
         </Animatable.View>
       </View>

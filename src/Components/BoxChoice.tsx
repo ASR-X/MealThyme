@@ -6,8 +6,6 @@ import { useRecoilState } from 'recoil'
 import { marginBottom } from 'styled-system'
 import userstate from '../Recoil/userstate'
 
-
-
 import { QuestionText, Colors } from './styles'
 
 const { primary, white, black } = Colors
@@ -18,7 +16,11 @@ const Item = ({ item, selected, onPress }): React.ReactElement<any> => {
       {selected ? (
         <MaterialIcons name="check-box" color={primary} size={18} />
       ) : (
-        <MaterialIcons name="check-box-outline-blank" color={primary} size={18} />
+        <MaterialIcons
+          name="check-box-outline-blank"
+          color={primary}
+          size={18}
+        />
       )}
       <QuestionText style={{ fontSize: 18 }}>{item.title}</QuestionText>
     </TouchableOpacity>
@@ -27,7 +29,7 @@ const Item = ({ item, selected, onPress }): React.ReactElement<any> => {
 
 export const BoxChoice = ({ props, num }): React.ReactElement<any> => {
   const [selectedId, setSelectedId] = useState([])
-  const [user, setuser] = useRecoilState(userstate);
+  const [user, setuser] = useRecoilState(userstate)
 
   const renderItem = ({ item }) => {
     const selected = selectedId.includes(item.id)
@@ -38,7 +40,7 @@ export const BoxChoice = ({ props, num }): React.ReactElement<any> => {
         onPress={() => {
           if (selectedId.includes(item.id)) {
             setuser({
-                [num]: selectedId.filter((id) => id !== item.id),
+              [num]: selectedId.filter((id) => id !== item.id),
             })
             setSelectedId(selectedId.filter((id) => id !== item.id))
           } else {

@@ -25,7 +25,7 @@ const Item = ({ item, selected, onPress }): React.ReactElement<any> => {
 
 export const MultipleChoice = ({ props, num }): React.ReactElement<any> => {
   const [selectedId, setSelectedId] = useState(null)
-  const [user, setuser] = useRecoilState(userstate);
+  const [user, setuser] = useRecoilState(userstate)
 
   const renderItem = ({ item }) => {
     const selected = item.id === selectedId ? true : false

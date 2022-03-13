@@ -7,9 +7,7 @@ import { Colors, WelcomeTitle } from './src/Components/styles'
 
 // React Navigation stack
 import RootStack from './src/Navigators/MainNavigation'
-import {
-  RecoilRoot,
-} from 'recoil';
+import { RecoilRoot } from 'recoil'
 
 import * as Linking from 'expo-linking'
 
@@ -23,7 +21,7 @@ const navTheme = {
     ...DefaultTheme.colors,
     background: 'transparent',
   },
-};
+}
 
 const App = (): React.ReactElement => {
   LogBox.ignoreAllLogs(true)

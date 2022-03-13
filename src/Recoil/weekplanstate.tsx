@@ -3,57 +3,57 @@ import WeekPlan from './weekplan'
 import User from './user'
 
 const weekplanstate = atom<WeekPlan>({
-    key: 'weekplan-state',
-    default: {
-        // startDate: new Date(),
-        // endDate: new Date(),
-        meals: [],
-        startDate: new Date(2020, 5, 1),
-        // meals: [
-        //     {
-        //       title: 'Breakfast1',
-        //       entree: 'Entree1',
-        //       side: 'Side1',
-        //       fruits: 'Fruits1',
-        //     },
-        //     {
-        //       title: 'Lunch1',
-        //       entree: 'Entree1',
-        //       side: 'Side1',
-        //       fruits: 'Fruits1',
-        //     },
-        //     {
-        //       title: 'Dinner1',
-        //       entree: 'Entree1',
-        //       side: 'Side1',
-        //       fruits: 'Fruits1',
-        //     },
-        //     {
-        //       title: 'Breakfast2',
-        //       entree: 'Entree2',
-        //       side: 'Side2',
-        //       fruits: 'Fruits2',
-        //     },
-        //     {
-        //       title: 'Lunch2',
-        //       entree: 'Entree2',
-        //       side: 'Side2',
-        //       fruits: 'Fruits2',
-        //     },
-        //     {
-        //       title: 'Dinner2',
-        //       entree: 'Entree2',
-        //       side: 'Side2',
-        //       fruits: 'Fruits2',
-        //     },
-        //   ],
-          selectedDay: 13,
-          selectedMeal: -1,
-          selectedDish: 1,
-          cIndex: 0,
-          completedMeals: [],
-    } as WeekPlan
-}) 
+  key: 'weekplan-state',
+  default: {
+    // startDate: new Date(),
+    // endDate: new Date(),
+    meals: [],
+    startDate: new Date(2020, 5, 1),
+    // meals: [
+    //     {
+    //       title: 'Breakfast1',
+    //       entree: 'Entree1',
+    //       side: 'Side1',
+    //       fruits: 'Fruits1',
+    //     },
+    //     {
+    //       title: 'Lunch1',
+    //       entree: 'Entree1',
+    //       side: 'Side1',
+    //       fruits: 'Fruits1',
+    //     },
+    //     {
+    //       title: 'Dinner1',
+    //       entree: 'Entree1',
+    //       side: 'Side1',
+    //       fruits: 'Fruits1',
+    //     },
+    //     {
+    //       title: 'Breakfast2',
+    //       entree: 'Entree2',
+    //       side: 'Side2',
+    //       fruits: 'Fruits2',
+    //     },
+    //     {
+    //       title: 'Lunch2',
+    //       entree: 'Entree2',
+    //       side: 'Side2',
+    //       fruits: 'Fruits2',
+    //     },
+    //     {
+    //       title: 'Dinner2',
+    //       entree: 'Entree2',
+    //       side: 'Side2',
+    //       fruits: 'Fruits2',
+    //     },
+    //   ],
+    selectedDay: 13,
+    selectedMeal: -1,
+    selectedDish: 1,
+    cIndex: 0,
+    completedMeals: [],
+  } as WeekPlan,
+})
 
 export default weekplanstate
 
