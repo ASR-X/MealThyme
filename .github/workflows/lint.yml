@@ -37,4 +37,4 @@ jobs:
         with:
           prettier: true
           auto_fix: true
-          git_email: "lint-action@vmware-dev.com"
+          git_email: "lint-action@asrx.com"
