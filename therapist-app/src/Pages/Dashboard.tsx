@@ -13,8 +13,9 @@ import { Icon } from 'react-native-elements'
 import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 import { useRecoilState } from 'recoil'
 
-import { Colors, GreenOval } from '../Components/styles'
+import { Colors, GreenOval, iosStyles } from '../Components/styles'
 import weekplanstate from '../Recoil/weekplanstate'
+import {Slider} from '@miblanchard/react-native-slider'
 
 // Colors
 const { primary, white, grey, black } = Colors
@@ -246,6 +247,8 @@ const screenWidth = Dimensions.get("window").width;
 
 const [ allgraphs, setallgraphs ] = useState([])
 const [loading, setloading] = useState(true)
+
+const [intake, setintake] = useState(0)
 
 const stable = {
   labels: ["January", "February", "March", "April", "May", "June"],
@@ -481,8 +484,54 @@ const chartConfig = (color) => {
             }}
             withDots={false}
           />
+
+
+          <View>
+            <Text style={{
+            fontSize: 50,
+            fontWeight: 'bold',
+            color: primary,}}>
+              Caloric Intake
+          </Text>
+        <View
+          style={{
+            marginTop: 20,
+            marginBottom: 20,
+            marginRight: 20,
+          }}
+        >
+          <Slider
+                      animateTransitions
+                      maximumTrackTintColor= {white}
+                      minimumTrackTintColor= {primary}
+                      thumbStyle={iosStyles.thumb}
+                      trackStyle={iosStyles.track}
+                      minimumValue={-10}
+                      maximumValue={10}
+                      step={1}
+                      value={intake ? intake : 0}
+                      trackClickable={true}
+                      onValueChange={(value) => { setintake(value[0]) }}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 5,
+            }}
+          >
+            <Text style={{ color: primary }}>-10</Text>
+            <Text style={{ color: primary }}>10</Text>  
           </View>
+        </View>
+          </View>
+        </View>
+
       }
+
+
+
+
         </ScrollView>
 
     </View>
