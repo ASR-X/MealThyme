@@ -7,7 +7,7 @@ Despite facing the arduous prospects one might confront while dealing with eatin
 
 The ASR-X team believes in the importance of technology in today's rapidly developing world. Near the start of SF Hacks 2022, we realized the potential rehabilitative power software had for eating disorder-affected patients. With a clear goal in mind, we set out on the development of our project, **MealThyme**.
 
-<img src="https://cdn.discordapp.com/attachments/817192378137051140/952596322106617876/IMG_0250.png" alt="drawing" height="50"/>
+<img src="https://cdn.discordapp.com/attachments/817192378137051140/952596322106617876/IMG_0250.png" alt="drawing"/>
 
 ## What it does 🤔
 MealThyme is a mobile app that gathers individual data (height, weight, age, gender, daily activity levels) to calculate and reach a user's ideal BMI/weight. To treat patients affected by eating disorders, the app collects consumers' dietary preferences (including restrictions/allergens, optimal spice level, optimal sweetness level for desserts), creating daily tailored meal plans that fit recommended calorie intake requirements. 
@@ -17,7 +17,7 @@ Furthermore, over the course of the intended treatment period (3 weeks), our app
 On the other side of a user's treatment plan, his or her therapist has the ability to view all of the selected preferences, user statistics, and meal plans. By connecting with the patient, the therapist can assess our app's performance  and tweak parameters in order to improve upon the computer-generated algorithms and food suggestions if necessary.
 
 Sample of our UI/UX implementation:
-<img src="https://cdn.discordapp.com/attachments/817192378137051140/952626179112841236/unknown.png" width="100"/>
+<img src="https://cdn.discordapp.com/attachments/817192378137051140/952626179112841236/unknown.png"/>
 
 
 ## Design and Logo 🎨
@@ -25,7 +25,7 @@ Our team's designers and illustrators took to a minimalist **Material UI** desig
 
 Our wireframe:
 <p align="center">
-<img src="https://cdn.discordapp.com/attachments/817192378137051140/952624715334303784/unknown.png" alt="drawing" width="200"/>
+<img src="https://cdn.discordapp.com/attachments/817192378137051140/952624715334303784/unknown.png" alt="drawing" />
 </p>
 
 ## How we built it ⚙️
